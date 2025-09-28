@@ -14,7 +14,7 @@ body {
     line-height: 1.6;
 }
 
-/* Background with hair image - slim center with pink sides */
+/* Background with hair image - slim center with pink sides (Desktop only) */
 body::before {
     content: '';
     position: fixed;
@@ -33,7 +33,7 @@ body::before {
     clip-path: inset(0 20% 0 20%);
 }
 
-/* Pink side backgrounds */
+/* Pink side backgrounds (Desktop only) */
 body::after {
     content: '';
     position: fixed;
@@ -79,6 +79,7 @@ body::after {
         background-position: center;
         background-repeat: no-repeat;
         background-attachment: fixed;
+        background: url('IMG_8918.jpeg');
     }
     
     body::before,
@@ -302,20 +303,6 @@ body::after {
     }
 }
 
-/* Hide pink backgrounds on smaller screens */
-@media (max-width: 768px) {
-    body::after {
-        display: none;
-    }
-}
-
-/* Full screen background on smaller screens */
-@media (max-width: 768px) {
-    body::before {
-        background-size: 100% 100%;
-        clip-path: none;
-    }
-}
 
 /* Additional Mobile Responsive Adjustments */
 @media (max-width: 768px) {
