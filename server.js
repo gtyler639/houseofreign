@@ -43,10 +43,11 @@ const db = new sqlite3.Database('./subscribers.db', (err) => {
         db.run(`
             CREATE TABLE IF NOT EXISTS subscribers (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                email TEXT UNIQUE NOT NULL,
-                phone TEXT NOT NULL,
+                email TEXT,
+                phone TEXT,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                is_active BOOLEAN DEFAULT 1
+                is_active BOOLEAN DEFAULT 1,
+                UNIQUE(email, phone)
             )
         `, (err) => {
             if (err) {
@@ -85,52 +86,61 @@ app.get('/api/health', (req, res) => {
 app.post('/api/subscribe', (req, res) => {
     const { email, phone } = req.body;
 
-    // Validation
-    if (!email || !phone) {
+    // Validation - require either email OR phone
+    if (!email && !phone) {
         return res.status(400).json({
             success: false,
-            message: 'Email and phone number are required'
+            message: 'Either email address or phone number is required'
         });
     }
 
-    if (!validateEmail(email)) {
+    if (email && !validateEmail(email)) {
         return res.status(400).json({
             success: false,
             message: 'Please provide a valid email address'
         });
     }
 
-    if (!validatePhone(phone)) {
+    if (phone && !validatePhone(phone)) {
         return res.status(400).json({
             success: false,
             message: 'Please provide a valid 10-digit phone number'
         });
     }
 
-    // Clean phone number (remove non-digits)
-    const cleanPhone = phone.replace(/\D/g, '');
+    // Clean phone number (remove non-digits) if provided
+    const cleanPhone = phone ? phone.replace(/\D/g, '') : '';
 
-    // Check if email already exists
-    db.get('SELECT id FROM subscribers WHERE email = ?', [email], (err, row) => {
-        if (err) {
-            console.error('Database error:', err);
-            return res.status(500).json({
-                success: false,
-                message: 'Internal server error'
-            });
-        }
+    // Check if email already exists (only if email is provided)
+    if (email) {
+        db.get('SELECT id FROM subscribers WHERE email = ?', [email], (err, row) => {
+            if (err) {
+                console.error('Database error:', err);
+                return res.status(500).json({
+                    success: false,
+                    message: 'Internal server error'
+                });
+            }
 
-        if (row) {
-            return res.status(409).json({
-                success: false,
-                message: 'This email is already subscribed'
-            });
-        }
+            if (row) {
+                return res.status(409).json({
+                    success: false,
+                    message: 'This email is already subscribed'
+                });
+            }
 
-        // Insert new subscriber
+            // Insert new subscriber
+            insertSubscriber(email, cleanPhone, res);
+        });
+    } else {
+        // No email provided, just insert with phone
+        insertSubscriber('', cleanPhone, res);
+    }
+
+    function insertSubscriber(email, phone, res) {
         db.run(
             'INSERT INTO subscribers (email, phone) VALUES (?, ?)',
-            [email, cleanPhone],
+            [email, phone],
             function(err) {
                 if (err) {
                     console.error('Database error:', err);
@@ -140,15 +150,16 @@ app.post('/api/subscribe', (req, res) => {
                     });
                 }
 
-                console.log(`New subscriber added: ${email}`);
+                const contactMethod = email ? 'email' : 'SMS';
+                console.log(`New subscriber added via ${contactMethod}: ${email || phone}`);
                 res.json({
                     success: true,
-                    message: 'Successfully subscribed! You\'ll receive updates about our upcoming drop.',
+                    message: `Successfully subscribed! You'll receive updates about our upcoming drop via ${contactMethod}.`,
                     subscriberId: this.lastID
                 });
             }
         );
-    });
+    }
 });
 
 // Get subscribers count (for admin purposes)
@@ -245,3 +256,4 @@ app.listen(PORT, '0.0.0.0', () => {
 });
 
 module.exports = app;
+
