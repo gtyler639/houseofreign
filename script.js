@@ -113,23 +113,18 @@ class SubscriptionForm {
         const email = this.emailInput.value.trim();
         const phone = this.phoneInput.value.trim();
 
-        // Validation
-        if (!email) {
-            this.showMessage('Please enter your email address.', true);
+        // Validation - require either email OR phone
+        if (!email && !phone) {
+            this.showMessage('Please enter either your email address or phone number.', true);
             return;
         }
 
-        if (!this.validateEmail(email)) {
+        if (email && !this.validateEmail(email)) {
             this.showMessage('Please enter a valid email address.', true);
             return;
         }
 
-        if (!phone) {
-            this.showMessage('Please enter your phone number.', true);
-            return;
-        }
-
-        if (!this.validatePhone(phone)) {
+        if (phone && !this.validatePhone(phone)) {
             this.showMessage('Please enter a valid 10-digit phone number.', true);
             return;
         }
@@ -143,7 +138,8 @@ class SubscriptionForm {
         try {
             // Simulate API call (replace with actual endpoint)
             await this.submitToAPI(email, phone);
-            this.showMessage('Successfully subscribed! You\'ll receive updates about our upcoming drop.');
+            const contactMethod = email ? 'email' : 'SMS';
+            this.showMessage(`Successfully subscribed! You'll receive updates about our upcoming drop via ${contactMethod}.`);
             this.form.reset();
         } catch (error) {
             console.error('Subscription error:', error);
@@ -226,9 +222,8 @@ class SmoothAnimations {
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Set target date to 70 days from now
-    const targetDate = new Date();
-    targetDate.setDate(targetDate.getDate() + 70);
+    // Set fixed target date: December 4, 2025
+    const targetDate = new Date('December 4, 2025');
     
     // Initialize countdown timer
     new CountdownTimer(targetDate);
