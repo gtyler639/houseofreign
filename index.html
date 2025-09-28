@@ -11,73 +11,77 @@
     <meta name="msapplication-TileImage" content="brinewlogo.png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
 </head>
 <body>
 
 
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Brand Logo -->
-            <div class="brand-logo"><img src="brinewimage.png" alt="House of Reign Logo" /></div>
-            
-            <!-- Product Display -->
+            <div class="content-wrapper">
+                <!-- Brand Logo -->
+                <div class="brand-logo"><img src="brinewimage.png" alt="House of Reign Logo" /></div>
+                
+                <!-- Product Display -->
 
 
-            <!-- Product Announcement -->
+                <!-- Product Announcement -->
 
-            <!-- Countdown Timer -->
-            <div class="countdown-container">
-                <div class="countdown-timer">
-                    <div class="time-unit">
-                        <span class="time-number" id="days">70</span>
-                        <span class="time-label">DAYS</span>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-number" id="hours">00</span>
-                        <span class="time-label">HOURS</span>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-number" id="minutes">00</span>
-                        <span class="time-label">MINS</span>
-                    </div>
-                    <div class="time-unit">
-                        <span class="time-number" id="seconds">00</span>
-                        <span class="time-label">SECS</span>
+                <!-- Countdown Timer -->
+                <div class="countdown-container">
+                    <div class="countdown-timer">
+                        <div class="time-unit">
+                            <span class="time-number" id="days">70</span>
+                            <span class="time-label">DAYS</span>
+                        </div>
+                        <span class="time-separator">:</span>
+                        <div class="time-unit">
+                            <span class="time-number" id="hours">00</span>
+                            <span class="time-label">HOURS</span>
+                        </div>
+                        <span class="time-separator">:</span>
+                        <div class="time-unit">
+                            <span class="time-number" id="minutes">00</span>
+                            <span class="time-label">MINS</span>
+                        </div>
+                        <span class="time-separator">:</span>
+                        <div class="time-unit">
+                            <span class="time-number" id="seconds">00</span>
+                            <span class="time-label">SECS</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Call to Action -->
-            <div class="cta-text">Sign up for email and SMS to get exclusive early access to brand news and updates.</div>
+                <!-- Call to Action -->
+                <div class="cta-text">Sign up for email or SMS to get exclusive early access to brand news and updates.</div>
 
-            <!-- Subscription Form -->
-            <form class="subscription-form" id="subscriptionForm">
-                <input type="email" placeholder="Email" class="form-input" id="email" required>
-                <div class="phone-input-container">
-                    <div class="country-code">
-                        <span class="flag">🇺🇸</span>
-                        <span class="dropdown">▼</span>
+                <!-- Subscription Form -->
+                <form class="subscription-form" id="subscriptionForm">
+                    <input type="email" placeholder="Email" class="form-input" id="email">
+                    <div class="phone-input-container">
+                        <input type="tel" placeholder="Phone Number" class="form-input" id="phone">
                     </div>
-                    <input type="tel" placeholder="Phone Number" class="form-input phone-input" id="phone" required>
+                    <button type="submit" class="subscribe-btn">SUBSCRIBE</button>
+                </form>
+
+                <!-- Disclaimer -->
+                <div class="disclaimer">
+                    By submitting this form and signing up for texts, you consent to receive marketing text messages from House of Reign at the number provided Msg & data rates may apply. Unsubscribe at any time by replying STOP. 
+                    <a href="privacy-policy.html" class="link">Privacy Policy</a> & 
+                    <a href="terms-of-service.html" class="link">Terms</a>
                 </div>
-                <button type="submit" class="subscribe-btn">SUBSCRIBE</button>
-            </form>
 
-            <!-- Disclaimer -->
-            <div class="disclaimer">
-                By submitting this form and signing up for texts, you consent to receive marketing text messages from House of Reign at the number provided Msg & data rates may apply. Unsubscribe at any time by replying STOP. 
-                <a href="privacy-policy.html" class="link">Privacy Policy</a> & 
-                <a href="terms-of-service.html" class="link">Terms</a>
-            </div>
-
-            <!-- Social Media Icons -->
-            <div class="social-icons">
-                <a href="https://tiktok.com/@shophouseofreign" target="_blank" class="social-icon">
-                    <img src="tiktok.jpg" alt="TikTok" />
-                </a>
-                <a href="https://instagram.com/shophouseofreign" target="_blank" class="social-icon">
-                    <img src="ig.jpg" alt="Instagram" />
-                </a>
+                <!-- Social Media Icons -->
+                <div class="social-icons">
+                    <a href="https://tiktok.com/@shophouseofreign" target="_blank" class="social-icon">
+                        <img src="tiktok.jpg" alt="TikTok" />
+                    </a>
+                    <a href="https://instagram.com/shophouseofreign" target="_blank" class="social-icon">
+                        <img src="ig.jpg" alt="Instagram" />
+                    </a>
+                </div>
             </div>
         </div>
     </div>
